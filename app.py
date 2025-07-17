@@ -1,11 +1,11 @@
+import os
 from flask import Flask, request, render_template
 from openai import OpenAI
 
 app = Flask(__name__)
 
 # OpenAI client setup
-client = OpenAI()
-
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 @app.route("/", methods=["GET", "POST"])
 def index():

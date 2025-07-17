@@ -18,7 +18,7 @@ if __name__ == '__main__':
     print_name()
     from openai import OpenAI
 
-    client = OpenAI()
+    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
     resp = client.chat.completions.create(
         model="gpt-4.1",
