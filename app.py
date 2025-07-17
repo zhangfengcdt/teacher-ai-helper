@@ -1,8 +1,18 @@
+# In app.py
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_from_directory
 from openai import OpenAI
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
+
+# Serve static files from images folder
+@app.route('/images/<filename>')
+def serve_image(filename):
+    return send_from_directory('images', filename)
 
 # OpenAI client setup
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
@@ -18,14 +28,14 @@ def index():
         numweeks = request.form.get("numweeks")
         state = request.form.get("state")
         focus = request.form.get("focus")
-        format = request.form.get("format")  # New variable
+        format = request.form.get("format")
         user_input = request.form.get("user_input")
 
         # Send data to OpenAI endpoint
         response = client.responses.create(
             prompt={
-                "id": "pmpt_685eb5f872c4819796577ec226efeade0e49ce44769c0c7e",
-                "version": "5",
+                "id": os.environ.get("OPENAI_PROMPT_ID"),
+                "version": os.environ.get("OPENAI_PROMPT_VERSION", "5"),
                 "variables": {
                     "subject": subject,
                     "specialty": specialty,
@@ -33,8 +43,7 @@ def index():
                     "hoursperday": hoursperday,
                     "numweeks": numweeks,
                     "state": state,
-                    "focus": focus,
-                    "format": format  # Include the new variable
+                    "focus": focus
                 }
             },
             input=[{"role": "user", "content": user_input}],
