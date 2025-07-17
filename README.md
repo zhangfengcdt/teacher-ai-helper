@@ -72,26 +72,47 @@ python app.py
 
 ## Future Enhancements
 
-### High Priority
+### High Priority - AI-Enhanced Features
+- [ ] **Voice Input**: Natural speech-to-text input that auto-fills form fields
+- [ ] **Smart Auto-Complete**: AI-powered suggestions as users type in form fields
+- [ ] **Conversational Interface**: Chat-based lesson plan creation with follow-up questions
+- [ ] **Intelligent Form Pre-filling**: AI analyzes subject/grade and suggests optimal parameters
+- [ ] **Content Enhancement**: AI-powered suggestions to improve generated lesson plans
+- [ ] **Multi-Modal Input**: Support for image uploads (curriculum documents, worksheets) to inform lesson planning
+- [ ] **Adaptive Learning**: AI learns from user preferences and improves suggestions over time
+- [ ] **Real-time Collaboration**: AI-assisted collaborative lesson planning with other teachers
+
+### High Priority - Core Features
 - [ ] **Progress Indicators**: Add step-by-step progress bars for multi-step processes
 - [ ] **Save/Load Templates**: Allow users to save frequently used configurations
 - [ ] **Export Options**: PDF, Word, or plain text export for lesson plans
-- [ ] **History/Recent**: Show recently generated lesson plans
+- [ ] **History/Recent**: Show recently generated lesson plans with AI-powered search
 - [ ] **Validation**: Real-time form validation with helpful error messages
 
-### Medium Priority
+### Medium Priority - AI-Powered Enhancements
+- [ ] **Curriculum Alignment**: AI automatically aligns lesson plans with state standards
+- [ ] **Difficulty Adjustment**: AI-powered difficulty scaling based on student performance data
+- [ ] **Resource Recommendations**: AI suggests relevant materials, videos, and activities
+- [ ] **Assessment Generation**: Automatically create quizzes and rubrics from lesson plans
+- [ ] **Personalization Engine**: AI customizes content based on teaching style and student needs
+- [ ] **Language Translation**: Multi-language support for diverse classrooms
+- [ ] **Accessibility Features**: AI-generated alternative formats for different learning needs
+
+### Medium Priority - User Experience
 - [ ] **Dark Mode**: Toggle between light and dark themes
 - [ ] **Responsive Design**: Enhanced mobile-friendly layout
 - [ ] **Auto-save**: Save form data locally to prevent data loss
 - [ ] **Preview Mode**: Show preview before final generation
-- [ ] **Feedback System**: Allow users to rate and improve generated content
+- [ ] **Feedback System**: Allow users to rate and improve generated content with AI learning
 
-### Low Priority
+### Low Priority - Platform & Integration
 - [ ] **User Authentication**: Allow users to save their lesson plans
 - [ ] **Collaboration**: Share lesson plans with other teachers
-- [ ] **Analytics**: Track usage patterns and popular subjects
-- [ ] **Integration**: Connect with popular LMS platforms
-- [ ] **Offline Mode**: Basic functionality when internet is limited
+- [ ] **Analytics**: Track usage patterns and popular subjects with AI insights
+- [ ] **LMS Integration**: Connect with popular platforms (Google Classroom, Canvas, Blackboard)
+- [ ] **Calendar Integration**: Sync lesson plans with teaching schedules
+- [ ] **Mobile App**: Native iOS/Android app with offline AI capabilities
+- [ ] **API Access**: Allow third-party integrations and custom tools
 
 ## Contributing
 
