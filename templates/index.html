@@ -3,21 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Web App</title>
+    <title>EduPlan Assistant - AI Lesson Plan Generator</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             line-height: 1.6;
+            color: #333;
         }
 
         header {
-            background-color: #333;
-            color: white;
-            padding: 1rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #2c3e50;
+            padding: 2rem 0;
             text-align: center;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            font-weight: 400;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #667eea;
         }
 
         .container {
@@ -27,60 +66,117 @@
         }
 
         .form-container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 2rem auto;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+            font-size: 1.8rem;
+            font-weight: 300;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: bold;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        input, textarea, button {
+        input, textarea, select {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            padding: 1rem;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
             font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         button {
-            background-color: #007BFF;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             cursor: pointer;
-            padding: 0.75rem;
+            padding: 1rem 2rem;
             margin-top: 1rem;
-            font-weight: bold;
-            transition: background-color 0.2s;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
         button:hover {
-            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
         }
 
         button:disabled {
-            background-color: #cccccc;
+            background: #bdc3c7;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         .response-container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 2rem auto;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             white-space: pre-wrap;
+        }
+
+        .response-container h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+
+        .response-content {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            font-size: 1.1rem;
+            line-height: 1.7;
         }
 
         .loading-overlay {
@@ -118,55 +214,69 @@
 <body>
     <header>
         <div class="container">
-            <h1>Teacher Web App</h1>
+            <h1>EduPlan Assistant</h1>
+            <p class="subtitle">Transform your teaching with AI-generated lesson plans tailored to your subject, student level, and learning objectives. Save hours of planning time.</p>
         </div>
     </header>
     <main class="container">
         <div class="form-container">
+            <h2>Create Your Lesson Plan</h2>
             <form method="POST" id="lessonForm" onsubmit="showLoading()">
-                <div class="form-group">
-                    <label for="subject">Subject:</label>
-                    <input type="text" id="subject" name="subject" value="Math" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <input type="text" id="subject" name="subject" value="Math" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialty">Specialty:</label>
+                        <input type="text" id="specialty" name="specialty" value="Geometry" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="grade">Grade Level:</label>
+                        <select id="grade" name="grade" required>
+                            <option value="K">Kindergarten</option>
+                            <option value="1st">1st Grade</option>
+                            <option value="2nd">2nd Grade</option>
+                            <option value="3rd">3rd Grade</option>
+                            <option value="4th">4th Grade</option>
+                            <option value="5th">5th Grade</option>
+                            <option value="6th">6th Grade</option>
+                            <option value="7th">7th Grade</option>
+                            <option value="8th" selected>8th Grade</option>
+                            <option value="9th">9th Grade</option>
+                            <option value="10th">10th Grade</option>
+                            <option value="11th">11th Grade</option>
+                            <option value="12th">12th Grade</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State/Region:</label>
+                        <input type="text" id="state" name="state" value="California" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hoursperday">Hours per Day:</label>
+                        <input type="number" id="hoursperday" name="hoursperday" value="1" min="0.5" max="8" step="0.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="numweeks">Number of Weeks:</label>
+                        <input type="number" id="numweeks" name="numweeks" value="3" min="1" max="52" required>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="specialty">Specialty:</label>
-                    <input type="text" id="specialty" name="specialty" value="Geometry" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="grade">Grade:</label>
-                    <input type="text" id="grade" name="grade" value="8th" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="hoursperday">Hours per Day:</label>
-                    <input type="number" id="hoursperday" name="hoursperday" value="1" min="0.5" max="8" step="0.5" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="numweeks">Number of Weeks:</label>
-                    <input type="number" id="numweeks" name="numweeks" value="3" min="1" max="52" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="state">State:</label>
-                    <input type="text" id="state" name="state" value="California" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="focus">Focus:</label>
-                    <input type="text" id="focus" name="focus" value="Finding solutions" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="format">Format:</label>
-                    <input type="text" id="format" name="format" value="Text" required>
+                    <label for="focus">Learning Focus:</label>
+                    <input type="text" id="focus" name="focus" value="Problem-solving and critical thinking" required>
                 </div>
 
                 <div class="form-group">
                     <label for="user_input">Additional Instructions:</label>
-                    <textarea id="user_input" name="user_input" rows="4" placeholder="Add any specific requirements for the lesson plan" required>Do not write more than 126 words.</textarea>
+                    <textarea id="user_input" name="user_input" rows="4" placeholder="Add any specific requirements, learning objectives, or special considerations for the lesson plan..." required>Generate a comprehensive lesson plan with clear objectives, activities, and assessment methods. Keep it concise and actionable.</textarea>
                 </div>
 
                 <button type="submit" id="submitBtn">Generate Lesson Plan</button>
@@ -174,12 +284,16 @@
         </div>
 
         <div class="response-container">
-            <h2>Response</h2>
+            <h2>Generated Lesson Plan</h2>
             {% if response %}
                 <div class="response-content">{{ response }}</div>
             {% else %}
-                <p>No response available. Submit the form to generate a lesson plan.</p>
+                <p style="text-align: center; color: #7f8c8d; font-style: italic;">Your AI-generated lesson plan will appear here after submission.</p>
             {% endif %}
+        </div>
+        
+        <div class="footer">
+            <p>Created by <a href="http://kevin-homepage.s3-website-us-east-1.amazonaws.com/" target="_blank">Kevin</a></p>
         </div>
     </main>
 
