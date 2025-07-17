@@ -59,6 +59,229 @@
             color: #667eea;
         }
 
+        .ai-features-toggle {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .toggle-button {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+        }
+
+        .toggle-button:hover, .toggle-button.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .voice-input-container {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .voice-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #667eea;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .voice-button:hover {
+            background: #764ba2;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .voice-button.recording {
+            background: #e74c3c;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.1); }
+            100% { transform: translateY(-50%) scale(1); }
+        }
+
+        .suggestions-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #e0e6ed;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s ease;
+        }
+
+        .suggestion-item:hover {
+            background: #f8f9fa;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .chat-interface {
+            display: none;
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .chat-message.user {
+            background: #667eea;
+            color: white;
+            margin-left: auto;
+        }
+
+        .chat-message.ai {
+            background: white;
+            border: 1px solid #e0e6ed;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #e0e6ed;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .chat-send-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .chat-send-button:hover {
+            background: #764ba2;
+        }
+
+        .feature-banner {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .feature-banner.coming-soon {
+            opacity: 0.7;
+        }
+
+        .ai-suggestions-panel {
+            position: absolute;
+            right: -320px;
+            top: 0;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .ai-suggestions-panel.show {
+            right: -310px;
+        }
+
+        .form-container {
+            position: relative;
+        }
+
+        .export-options {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .export-button {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .export-button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .export-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -219,17 +442,48 @@
         </div>
     </header>
     <main class="container">
-        <div class="form-container">
+        <!-- AI Features Toggle -->
+        <div class="ai-features-toggle">
+            <button class="toggle-button active" onclick="toggleInterface('form')">📝 Traditional Form</button>
+            <button class="toggle-button" onclick="toggleInterface('chat')">💬 AI Chat Assistant</button>
+            <button class="toggle-button" onclick="toggleInterface('voice')">🎤 Voice Commands</button>
+        </div>
+
+        <!-- Feature Banners -->
+        <div class="feature-banner coming-soon">
+            🚀 Coming Soon: Voice Input, Smart Suggestions, and Multi-Modal Support
+        </div>
+
+        <!-- Traditional Form Interface -->
+        <div class="form-container" id="formInterface">
             <h2>Create Your Lesson Plan</h2>
             <form method="POST" id="lessonForm" onsubmit="showLoading()">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="subject">Subject:</label>
-                        <input type="text" id="subject" name="subject" value="Math" required>
+                        <div class="voice-input-container">
+                            <input type="text" id="subject" name="subject" value="Math" required>
+                            <button type="button" class="voice-button" onclick="startVoiceInput('subject')" title="Voice Input">🎤</button>
+                            <div class="suggestions-dropdown" id="subjectSuggestions">
+                                <div class="suggestion-item" onclick="selectSuggestion('subject', 'Mathematics')">Mathematics</div>
+                                <div class="suggestion-item" onclick="selectSuggestion('subject', 'Science')">Science</div>
+                                <div class="suggestion-item" onclick="selectSuggestion('subject', 'English')">English</div>
+                                <div class="suggestion-item" onclick="selectSuggestion('subject', 'History')">History</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="specialty">Specialty:</label>
-                        <input type="text" id="specialty" name="specialty" value="Geometry" required>
+                        <div class="voice-input-container">
+                            <input type="text" id="specialty" name="specialty" value="Geometry" required>
+                            <button type="button" class="voice-button" onclick="startVoiceInput('specialty')" title="Voice Input">🎤</button>
+                            <div class="suggestions-dropdown" id="specialtySuggestions">
+                                <div class="suggestion-item" onclick="selectSuggestion('specialty', 'Algebra')">Algebra</div>
+                                <div class="suggestion-item" onclick="selectSuggestion('specialty', 'Calculus')">Calculus</div>
+                                <div class="suggestion-item" onclick="selectSuggestion('specialty', 'Statistics')">Statistics</div>
+                                <div class="suggestion-item" onclick="selectSuggestion('specialty', 'Trigonometry')">Trigonometry</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -276,19 +530,71 @@
 
                 <div class="form-group">
                     <label for="user_input">Additional Instructions:</label>
-                    <textarea id="user_input" name="user_input" rows="4" placeholder="Add any specific requirements, learning objectives, or special considerations for the lesson plan..." required>Generate a comprehensive lesson plan with clear objectives, activities, and assessment methods. Keep it concise and actionable.</textarea>
+                    <div class="voice-input-container">
+                        <textarea id="user_input" name="user_input" rows="4" placeholder="Add any specific requirements, learning objectives, or special considerations for the lesson plan..." required>Generate a comprehensive lesson plan with clear objectives, activities, and assessment methods. Keep it concise and actionable.</textarea>
+                        <button type="button" class="voice-button" onclick="startVoiceInput('user_input')" title="Voice Input">🎤</button>
+                    </div>
                 </div>
 
                 <button type="submit" id="submitBtn">Generate Lesson Plan</button>
             </form>
+            
+            <!-- AI Suggestions Panel -->
+            <div class="ai-suggestions-panel" id="aiSuggestionsPanel">
+                <h3>🤖 AI Suggestions</h3>
+                <div class="feature-banner coming-soon">
+                    <p>Smart suggestions based on your inputs will appear here</p>
+                </div>
+                <div id="aiSuggestions">
+                    <p><strong>💡 Tip:</strong> Try "inquiry-based learning" for Math</p>
+                    <p><strong>📚 Resource:</strong> Khan Academy has great geometry modules</p>
+                    <p><strong>🎯 Assessment:</strong> Consider peer review activities</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Interface -->
+        <div class="chat-interface" id="chatInterface">
+            <h2>💬 AI Chat Assistant</h2>
+            <div class="feature-banner coming-soon">
+                Conversational lesson planning - ask questions, get instant feedback, and refine your plans naturally
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message ai">
+                    <strong>EduPlan AI:</strong> Hi! I'm here to help you create amazing lesson plans. What subject would you like to focus on today?
+                </div>
+                <div class="chat-message user">
+                    <strong>You:</strong> I need help with an 8th grade geometry lesson
+                </div>
+                <div class="chat-message ai">
+                    <strong>EduPlan AI:</strong> Great! What specific geometry topics would you like to cover? How many class periods do you have available?
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Type your message here..." disabled>
+                <button class="chat-send-button" onclick="sendChatMessage()" disabled>Send</button>
+                <button type="button" class="voice-button" onclick="startVoiceInput('chatInput')" title="Voice Input" disabled>🎤</button>
+            </div>
         </div>
 
         <div class="response-container">
             <h2>Generated Lesson Plan</h2>
             {% if response %}
                 <div class="response-content">{{ response }}</div>
+                <div class="export-options">
+                    <button class="export-button" onclick="exportToPDF()" disabled>📄 Export PDF</button>
+                    <button class="export-button" onclick="exportToWord()" disabled>📝 Export Word</button>
+                    <button class="export-button" onclick="exportToText()" disabled>📋 Copy Text</button>
+                    <button class="export-button" onclick="shareLesson()" disabled>🔗 Share</button>
+                </div>
             {% else %}
                 <p style="text-align: center; color: #7f8c8d; font-style: italic;">Your AI-generated lesson plan will appear here after submission.</p>
+                <div class="export-options">
+                    <button class="export-button" disabled>📄 Export PDF</button>
+                    <button class="export-button" disabled>📝 Export Word</button>
+                    <button class="export-button" disabled>📋 Copy Text</button>
+                    <button class="export-button" disabled>🔗 Share</button>
+                </div>
             {% endif %}
         </div>
         
@@ -308,13 +614,149 @@
             document.getElementById('submitBtn').disabled = true;
         }
 
-        // Add event listener to enable form submission button only when all fields are filled
+        // Interface Toggle Functions
+        function toggleInterface(type) {
+            const formInterface = document.getElementById('formInterface');
+            const chatInterface = document.getElementById('chatInterface');
+            const buttons = document.querySelectorAll('.toggle-button');
+            
+            // Remove active class from all buttons
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Hide all interfaces
+            formInterface.style.display = 'none';
+            chatInterface.style.display = 'none';
+            
+            // Show selected interface and activate button
+            if (type === 'form') {
+                formInterface.style.display = 'block';
+                buttons[0].classList.add('active');
+            } else if (type === 'chat') {
+                chatInterface.style.display = 'block';
+                buttons[1].classList.add('active');
+            } else if (type === 'voice') {
+                formInterface.style.display = 'block';
+                buttons[2].classList.add('active');
+                // Show voice-focused interface
+                alert('Voice Commands interface coming soon! For now, use the 🎤 buttons on individual fields.');
+            }
+        }
+
+        // Voice Input Functions (Placeholder)
+        function startVoiceInput(fieldId) {
+            const button = event.target;
+            const field = document.getElementById(fieldId);
+            
+            // Visual feedback
+            button.classList.add('recording');
+            button.textContent = '🔴';
+            
+            // Simulate voice input (placeholder)
+            setTimeout(() => {
+                button.classList.remove('recording');
+                button.textContent = '🎤';
+                
+                // Placeholder functionality
+                if (fieldId === 'subject') {
+                    field.value = 'Mathematics (Voice Input)';
+                } else if (fieldId === 'specialty') {
+                    field.value = 'Algebra (Voice Input)';
+                } else if (fieldId === 'user_input') {
+                    field.value = 'Voice input: Create an engaging lesson with hands-on activities and real-world applications.';
+                }
+                
+                // Show suggestions
+                showSuggestions(fieldId);
+            }, 2000);
+        }
+
+        // Smart Suggestions Functions
+        function showSuggestions(fieldId) {
+            const dropdown = document.getElementById(fieldId + 'Suggestions');
+            if (dropdown) {
+                dropdown.style.display = 'block';
+                setTimeout(() => {
+                    dropdown.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function selectSuggestion(fieldId, value) {
+            document.getElementById(fieldId).value = value;
+            document.getElementById(fieldId + 'Suggestions').style.display = 'none';
+        }
+
+        // Chat Functions (Placeholder)
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            
+            if (input.value.trim()) {
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'chat-message user';
+                userMessage.innerHTML = `<strong>You:</strong> ${input.value}`;
+                messages.appendChild(userMessage);
+                
+                // Clear input
+                input.value = '';
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    const aiMessage = document.createElement('div');
+                    aiMessage.className = 'chat-message ai';
+                    aiMessage.innerHTML = `<strong>EduPlan AI:</strong> I understand you need help with that. This conversational interface is coming soon!`;
+                    messages.appendChild(aiMessage);
+                    messages.scrollTop = messages.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        // Export Functions (Placeholder)
+        function exportToPDF() {
+            alert('PDF export coming soon!');
+        }
+
+        function exportToWord() {
+            alert('Word export coming soon!');
+        }
+
+        function exportToText() {
+            const content = document.querySelector('.response-content');
+            if (content) {
+                navigator.clipboard.writeText(content.textContent);
+                alert('Lesson plan copied to clipboard!');
+            }
+        }
+
+        function shareLesson() {
+            alert('Sharing functionality coming soon!');
+        }
+
+        // Form validation (existing)
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('lessonForm');
             const inputs = form.querySelectorAll('input, textarea');
 
             inputs.forEach(input => {
                 input.addEventListener('input', checkFormValidity);
+                
+                // Add focus/blur events for suggestions
+                input.addEventListener('focus', function() {
+                    const suggestions = document.getElementById(this.id + 'Suggestions');
+                    if (suggestions) {
+                        suggestions.style.display = 'block';
+                    }
+                });
+                
+                input.addEventListener('blur', function() {
+                    setTimeout(() => {
+                        const suggestions = document.getElementById(this.id + 'Suggestions');
+                        if (suggestions) {
+                            suggestions.style.display = 'none';
+                        }
+                    }, 200);
+                });
             });
 
             function checkFormValidity() {
@@ -330,6 +772,13 @@
 
             // Initial check
             checkFormValidity();
+            
+            // Initialize chat input
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendChatMessage();
+                }
+            });
         });
     </script>
 </body>
