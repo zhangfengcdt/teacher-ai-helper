@@ -6,6 +6,23 @@ Transform your teaching with AI-generated lesson plans tailored to your subject,
 
 EduPlan Assistant is an AI-powered web application that helps teachers create comprehensive, personalized lesson plans quickly and efficiently. Built with Flask and powered by OpenAI's advanced language models, it generates tailored educational content based on your specific requirements.
 
+### AI Architecture: Linear LLM Approach
+
+EduPlan Assistant utilizes a **linear LLM (Large Language Model) architecture** rather than multi-agent systems. This design choice offers several advantages for lesson planning:
+
+**Linear Models Benefits:**
+- **Simplicity**: Single-model approach reduces complexity and potential points of failure
+- **Speed**: Faster processing for straightforward lesson planning tasks
+- **Consistency**: Uniform output style and quality across all generated content
+- **Cost-Effective**: Lower computational overhead compared to multi-agent systems
+- **Reliability**: Proven stability for focused, domain-specific tasks
+
+**When Linear vs Multi-Agent:**
+- **Linear models** excel at straightforward, well-defined tasks like lesson plan generation where a single expert perspective is sufficient
+- **Multi-agent systems** are better suited for complex, multifaceted problems requiring diverse expertise, parallel processing, and collaborative problem-solving
+
+For educational content generation, the linear approach provides the optimal balance of speed, reliability, and quality that teachers need for their daily planning workflow.
+
 ## Features
 
 - **AI-Powered Generation**: Uses OpenAI's latest models to create detailed lesson plans
