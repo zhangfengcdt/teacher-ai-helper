@@ -7,9 +7,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from app import app
 
-# This is the WSGI handler that Vercel will use
-def handler(event, context):
-    return app(event, context)
-
 # For Vercel, we need to export the app as 'app'
+# This will be the WSGI application that Vercel calls
+application = app
+
+# Also export as 'app' for compatibility
 app = app

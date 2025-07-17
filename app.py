@@ -145,6 +145,6 @@ if __name__ == "__main__":
     # For local development
     app.run(debug=False, host='0.0.0.0', port=int(os.environ.get('PORT', 8000)))
 
-# For Vercel deployment
-def handler(event, context):
-    return app(event, context)
+# Export for Vercel (handled in api/index.py)
+# Keep this for compatibility
+application = app
