@@ -1,6 +1,6 @@
 # In app.py
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_from_directory
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -8,6 +8,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
+
+# Serve static files from images folder
+@app.route('/images/<filename>')
+def serve_image(filename):
+    return send_from_directory('images', filename)
 
 # OpenAI client setup
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))

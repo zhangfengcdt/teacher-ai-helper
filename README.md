@@ -1,6 +1,16 @@
 # EduPlan Assistant
 
-Transform your teaching with AI-generated lesson plans tailored to your subject, student level, and learning objectives. Save hours of planning time.
+<p align="center">
+  <img src="images/kevin_logo.png" alt="Kevin's Logo" width="200" height="200">
+</p>
+
+<p align="center">
+  <strong>Transform your teaching with AI-generated lesson plans tailored to your subject, student level, and learning objectives. Save hours of planning time.</strong>
+</p>
+
+<p align="center">
+  <em>Created by Kevin - 8th/9th Grade Developer</em>
+</p>
 
 ## Overview
 
@@ -145,8 +155,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Author
 
-**Kevin**
+<p align="center">
+  <img src="images/kevin_logo.png" alt="Kevin's Logo" width="100" height="100">
+</p>
+
+**Kevin** - *8th/9th Grade Developer*
 - Portfolio: [kevin-homepage.s3-website-us-east-1.amazonaws.com](http://kevin-homepage.s3-website-us-east-1.amazonaws.com/)
+- Age: 8th/9th Grade Student
+- Skills: Python, Flask, AI Integration, Web Development, UI/UX Design
+
+> *"Demonstrating that age is just a number when it comes to creating innovative solutions. This project showcases advanced programming skills, AI integration, and professional web development capabilities."*
 
 ## Acknowledgments
 
