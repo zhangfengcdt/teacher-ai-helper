@@ -6,13 +6,21 @@
     <title>EduPlan Assistant - AI Lesson Plan Generator</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+            background-size: 400% 400%;
+            animation: rainbowGradient 15s ease infinite;
             min-height: 100vh;
             line-height: 1.6;
             color: #333;
+        }
+
+        @keyframes rainbowGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         header {
@@ -22,13 +30,25 @@
             padding: 2rem 0;
             text-align: center;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 5px solid #ff6b6b;
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.5rem;
-            font-weight: 300;
+            font-size: 2.8rem;
+            font-weight: 700;
             letter-spacing: -1px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
         }
 
         .subtitle {
@@ -80,23 +100,26 @@
         }
 
         .young-developer-badge {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
+            background-size: 300% 300%;
+            animation: rainbowGradient 3s ease infinite, glow 2s ease-in-out infinite alternate;
             color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
             display: inline-block;
             margin-left: 0.5rem;
-            animation: glow 2s ease-in-out infinite alternate;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            border: 2px solid #fff;
         }
 
         @keyframes glow {
             from {
-                box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+                box-shadow: 0 0 10px rgba(255, 107, 107, 0.7);
             }
             to {
-                box-shadow: 0 0 15px rgba(102, 126, 234, 0.8);
+                box-shadow: 0 0 20px rgba(78, 205, 196, 0.9), 0 0 30px rgba(69, 183, 209, 0.5);
             }
         }
 
@@ -165,19 +188,40 @@
 
         .toggle-button {
             background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #667eea;
-            color: #667eea;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
+            border: 3px solid #ff6b6b;
+            color: #ff6b6b;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
             margin: 0 0.5rem;
+            text-shadow: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toggle-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .toggle-button:hover::before, .toggle-button.active::before {
+            left: 0;
         }
 
         .toggle-button:hover, .toggle-button.active {
-            background: #667eea;
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
 
         .voice-input-container {
@@ -492,24 +536,35 @@
         }
 
         button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-size: 300% 300%;
+            animation: rainbowGradient 3s ease infinite;
             color: white;
             border: none;
             cursor: pointer;
-            padding: 1rem 2rem;
+            padding: 1.2rem 2.5rem;
             margin-top: 1rem;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-radius: 25px;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+            border: 3px solid #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.6);
+            animation: rainbowGradient 1s ease infinite, wiggle 0.5s ease infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: translateY(-3px) scale(1.05) rotate(0deg); }
+            25% { transform: translateY(-3px) scale(1.05) rotate(1deg); }
+            75% { transform: translateY(-3px) scale(1.05) rotate(-1deg); }
         }
 
         button:disabled {
@@ -608,9 +663,9 @@
                     <span class="young-developer-badge">8th/9th Grade Developer</span>
                 </div>
             </div>
-            <p class="subtitle">Transform your teaching with AI-generated lesson plans tailored to your subject, student level, and learning objectives. Save hours of planning time.</p>
+            <p class="subtitle">🤖✨ Hey teachers! Tired of spending HOURS making lesson plans? Let my AI buddy do the heavy lifting! Just fill out the form and BAM! 💥 You've got an awesome lesson plan ready to go! 🎉</p>
             <p style="text-align: center; margin-top: 0.5rem; font-size: 0.9rem; color: #7f8c8d;">
-                <em>Created by Kevin - Showcasing Youth Innovation in AI</em>
+                <em>🚀 Made with ❤️ by Kevin - Proving that 9th graders can build cool stuff too! 😎</em>
             </p>
         </div>
     </header>
@@ -619,22 +674,22 @@
             <!-- Sidebar with AI Info -->
             <div class="sidebar">
                 <div class="ai-info-banner">
-                    <h3>🤖 AI Architecture Information</h3>
+                    <h3>🤖 How My AI Works! 🧠</h3>
                     <p>
                         <span class="model-type">Linear LLM</span>
-                        EduPlan Assistant uses a <span class="highlight">linear Large Language Model</span> architecture optimized for educational content generation.
+                        So basically, I'm using this super cool <span class="highlight">Linear AI model</span> that's like having one really smart robot teacher! 🤓
                     </p>
                     <p>
-                        <strong>Why Linear AI?</strong> Linear models are <span class="highlight">simpler and faster</span> for straightforward tasks like lesson planning, providing consistent, high-quality results with lower computational overhead compared to multi-agent systems.
+                        <strong>Why not use multiple AI agents?</strong> Well, one focused AI is <span class="highlight">way faster and simpler</span> than having a bunch of AI robots trying to work together! Plus it's less confusing and makes better lesson plans! 🎯
                     </p>
                     <p>
-                        <strong>Best Use Case:</strong> Perfect for focused, domain-specific educational content where a single expert AI perspective delivers optimal results quickly and reliably.
+                        <strong>The Cool Part:</strong> My AI is specially trained for education stuff, so it's like having a teaching assistant that never gets tired and knows everything! 📚✨
                     </p>
                 </div>
 
                 <!-- Feature Banners -->
                 <div class="feature-banner coming-soon">
-                    🚀 Coming Soon: Voice Input, Smart Suggestions, and Multi-Modal Support
+                    🚀 Coming Soon: Talk to my AI! 🗣️ Smart suggestions! 🧠 And even more cool features! 😱✨
                 </div>
             </div>
 
@@ -642,14 +697,14 @@
             <div class="main-content">
                 <!-- AI Features Toggle -->
                 <div class="ai-features-toggle">
-                    <button class="toggle-button active" onclick="toggleInterface('form')">📝 Traditional Form</button>
-                    <button class="toggle-button" onclick="toggleInterface('chat')">💬 AI Chat Assistant</button>
-                    <button class="toggle-button" onclick="toggleInterface('voice')">🎤 Voice Commands</button>
+                    <button class="toggle-button active" onclick="toggleInterface('form')">📝 Fill Out Form</button>
+                    <button class="toggle-button" onclick="toggleInterface('chat')">💬 Chat with AI</button>
+                    <button class="toggle-button" onclick="toggleInterface('voice')">🎤 Talk to AI</button>
                 </div>
 
                 <!-- Traditional Form Interface -->
                 <div class="form-container" id="formInterface">
-                    <h2>Create Your Lesson Plan</h2>
+                    <h2>🎯 Let's Make Your Lesson Plan! 🎉</h2>
                     <form method="POST" id="lessonForm" onsubmit="showLoading()">
                         <div class="form-row">
                             <div class="form-group">
@@ -729,7 +784,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" id="submitBtn">Generate Lesson Plan</button>
+                        <button type="submit" id="submitBtn">🚀 Create My Awesome Lesson Plan! 🎉</button>
                     </form>
                     
                     <!-- AI Suggestions Panel -->
@@ -748,19 +803,19 @@
 
                 <!-- Chat Interface -->
                 <div class="chat-interface" id="chatInterface">
-                    <h2>💬 AI Chat Assistant</h2>
+                    <h2>💬 Chat with My AI Buddy! 🤖</h2>
                     <div class="feature-banner coming-soon">
-                        Conversational lesson planning - ask questions, get instant feedback, and refine your plans naturally
+                        Talk to my AI like you're texting a friend! Ask questions, get help, and make your lesson plan together! 😊
                     </div>
                     <div class="chat-messages" id="chatMessages">
                         <div class="chat-message ai">
-                            <strong>EduPlan AI:</strong> Hi! I'm here to help you create amazing lesson plans. What subject would you like to focus on today?
+                            <strong>Kevin's AI Buddy:</strong> Hey there! 👋 I'm super excited to help you make an awesome lesson plan! What subject are we working on today? 😊
                         </div>
                         <div class="chat-message user">
                             <strong>You:</strong> I need help with an 8th grade geometry lesson
                         </div>
                         <div class="chat-message ai">
-                            <strong>EduPlan AI:</strong> Great! What specific geometry topics would you like to cover? How many class periods do you have available?
+                            <strong>Kevin's AI Buddy:</strong> Ooh, geometry! That's so cool! 📐✨ What specific topics do you want to cover? And how much time do we have to work with? 🤔
                         </div>
                     </div>
                     <div class="chat-input-container">
@@ -774,7 +829,7 @@
             <!-- Output Section -->
             <div class="output-section">
                 <div class="response-container">
-                    <h2>Generated Lesson Plan</h2>
+                    <h2>🎉 Your Awesome Lesson Plan! 📚</h2>
                     {% if response %}
                         <div class="response-content">{{ response }}</div>
                         <div class="export-options">
@@ -799,17 +854,17 @@
         <div class="footer">
             <div class="footer-logo">
                 <img src="/images/kevin_logo.png" alt="Kevin's Logo">
-                <p>Created by <a href="http://kevin-homepage.s3-website-us-east-1.amazonaws.com/" target="_blank">Kevin</a> - 8th/9th Grade Developer</p>
+                <p>Made with lots of ☕ and 💻 by <a href="http://kevin-homepage.s3-website-us-east-1.amazonaws.com/" target="_blank">Kevin</a> - Your friendly neighborhood 9th grader! 🤓</p>
             </div>
             <p style="text-align: center; font-size: 0.9rem; color: #7f8c8d; margin-top: 0.5rem;">
-                <em>"Demonstrating that age is just a number when it comes to creating innovative AI solutions."</em>
+                <em>🌟 "Who says you need to be old to build cool stuff? Age is just a number when you've got big dreams!" 🚀</em>
             </p>
         </div>
     </main>
 
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
-        <span>Generating your lesson plan...</span>
+        <span>🤖 My AI is cooking up your awesome lesson plan! Hang tight! ✨</span>
     </div>
 
     <script>
