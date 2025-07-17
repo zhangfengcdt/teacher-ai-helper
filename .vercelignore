@@ -1,0 +1,19 @@
+# Vercel ignore file
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+venv/
+env/
+.DS_Store
+.git/
+.gitignore
+docker-compose.yml
+Dockerfile
+README.md
+DEPLOYMENT.md
+deploy.sh
+aws-task-definition.json
+.dockerignore
