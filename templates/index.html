@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            line-height: 1.6;
         }
 
         header {
@@ -19,25 +20,37 @@
             text-align: center;
         }
 
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
         .form-container {
             max-width: 600px;
             margin: 2rem auto;
-            padding: 1rem;
+            padding: 1.5rem;
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
         label {
-            margin: 0.5rem 0 0.2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
         }
 
         input, textarea, button {
             width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
+            padding: 0.75rem;
             border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 1rem;
         }
 
         button {
@@ -45,19 +58,29 @@
             color: white;
             border: none;
             cursor: pointer;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            font-weight: bold;
+            transition: background-color 0.2s;
         }
 
         button:hover {
             background-color: #0056b3;
         }
 
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
         .response-container {
             max-width: 600px;
             margin: 2rem auto;
-            padding: 1rem;
+            padding: 1.5rem;
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            white-space: pre-wrap;
         }
 
         .loading-overlay {
@@ -72,66 +95,128 @@
             align-items: center;
             color: white;
             font-size: 1.5rem;
+            z-index: 1000;
             display: none;
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #007BFF;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Teacher Web App</h1>
+        <div class="container">
+            <h1>Teacher Web App</h1>
+        </div>
     </header>
-    <main>
+    <main class="container">
         <div class="form-container">
-            <form method="POST" onsubmit="showLoading()">
-                <label for="subject">Subject:</label>
-                <input type="text" id="subject" name="subject" value="Math" required>
+            <form method="POST" id="lessonForm" onsubmit="showLoading()">
+                <div class="form-group">
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject" name="subject" value="Math" required>
+                </div>
 
-                <label for="specialty">Specialty:</label>
-                <input type="text" id="specialty" name="specialty" value="Geometry" required>
+                <div class="form-group">
+                    <label for="specialty">Specialty:</label>
+                    <input type="text" id="specialty" name="specialty" value="Geometry" required>
+                </div>
 
-                <label for="grade">Grade:</label>
-                <input type="text" id="grade" name="grade" value="8th" required>
+                <div class="form-group">
+                    <label for="grade">Grade:</label>
+                    <input type="text" id="grade" name="grade" value="8th" required>
+                </div>
 
-                <label for="hoursperday">Hours per Day:</label>
-                <input type="text" id="hoursperday" name="hoursperday" value="1" required>
+                <div class="form-group">
+                    <label for="hoursperday">Hours per Day:</label>
+                    <input type="number" id="hoursperday" name="hoursperday" value="1" min="0.5" max="8" step="0.5" required>
+                </div>
 
-                <label for="numweeks">Number of Weeks:</label>
-                <input type="text" id="numweeks" name="numweeks" value="3" required>
+                <div class="form-group">
+                    <label for="numweeks">Number of Weeks:</label>
+                    <input type="number" id="numweeks" name="numweeks" value="3" min="1" max="52" required>
+                </div>
 
-                <label for="state">State:</label>
-                <input type="text" id="state" name="state" value="California" required>
+                <div class="form-group">
+                    <label for="state">State:</label>
+                    <input type="text" id="state" name="state" value="California" required>
+                </div>
 
-                <label for="focus">Focus:</label>
-                <input type="text" id="focus" name="focus" value="Finding solutions" required>
+                <div class="form-group">
+                    <label for="focus">Focus:</label>
+                    <input type="text" id="focus" name="focus" value="Finding solutions" required>
+                </div>
 
-                <label for="format">Format:</label>
-                <input type="text" id="format" name="format" value="Text" required>
+                <div class="form-group">
+                    <label for="format">Format:</label>
+                    <input type="text" id="format" name="format" value="Text" required>
+                </div>
 
-                <label for="user_input">User Input:</label>
-                <textarea id="user_input" name="user_input" rows="4" required>Do not write more than 126 words.</textarea>
+                <div class="form-group">
+                    <label for="user_input">Additional Instructions:</label>
+                    <textarea id="user_input" name="user_input" rows="4" placeholder="Add any specific requirements for the lesson plan" required>Do not write more than 126 words.</textarea>
+                </div>
 
-                <button type="submit">Submit</button>
+                <button type="submit" id="submitBtn">Generate Lesson Plan</button>
             </form>
         </div>
 
         <div class="response-container">
+            <h2>Response</h2>
             {% if response %}
-                <h2>Response</h2>
-                <p>{{ response }}</p>
+                <div class="response-content">{{ response }}</div>
             {% else %}
+                <p>No response available. Submit the form to generate a lesson plan.</p>
             {% endif %}
-                <p>No response available.</p>
         </div>
     </main>
 
     <div class="loading-overlay" id="loadingOverlay">
-        Loading, please wait...
+        <div class="spinner"></div>
+        <span>Generating your lesson plan...</span>
     </div>
 
     <script>
-    function showLoading() {
-        document.getElementById('loadingOverlay').style.display = 'flex';
-    }
-</script>
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            document.getElementById('submitBtn').disabled = true;
+        }
+
+        // Add event listener to enable form submission button only when all fields are filled
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('lessonForm');
+            const inputs = form.querySelectorAll('input, textarea');
+
+            inputs.forEach(input => {
+                input.addEventListener('input', checkFormValidity);
+            });
+
+            function checkFormValidity() {
+                let isValid = true;
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                    }
+                });
+
+                document.getElementById('submitBtn').disabled = !isValid;
+            }
+
+            // Initial check
+            checkFormValidity();
+        });
+    </script>
 </body>
 </html>
