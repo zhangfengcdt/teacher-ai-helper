@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Web App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin: 0.5rem 0 0.2rem;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .response-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Teacher Web App</h1>
+    </header>
+    <main>
+        <div class="form-container">
+            <form method="POST" onsubmit="showLoading()">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" value="Math" required>
+
+                <label for="specialty">Specialty:</label>
+                <input type="text" id="specialty" name="specialty" value="Geometry" required>
+
+                <label for="grade">Grade:</label>
+                <input type="text" id="grade" name="grade" value="8th" required>
+
+                <label for="hoursperday">Hours per Day:</label>
+                <input type="text" id="hoursperday" name="hoursperday" value="1" required>
+
+                <label for="numweeks">Number of Weeks:</label>
+                <input type="text" id="numweeks" name="numweeks" value="3" required>
+
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" value="California" required>
+
+                <label for="focus">Focus:</label>
+                <input type="text" id="focus" name="focus" value="Finding solutions" required>
+
+                <label for="format">Format:</label>
+                <input type="text" id="format" name="format" value="Text" required>
+
+                <label for="user_input">User Input:</label>
+                <textarea id="user_input" name="user_input" rows="4" required>Do not write more than 126 words.</textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <div class="response-container">
+            {% if response %}
+                <h2>Response</h2>
+                <p>{{ response }}</p>
+            {% else %}
+            {% endif %}
+                <p>No response available.</p>
+        </div>
+    </main>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        Loading, please wait...
+    </div>
+
+    <script>
+    function showLoading() {
+        document.getElementById('loadingOverlay').style.display = 'flex';
+    }
+</script>
+</body>
+</html>
