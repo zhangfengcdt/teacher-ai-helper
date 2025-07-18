@@ -55,26 +55,50 @@ def get_openai_client():
             logger.error("OPENAI_API_KEY environment variable is not set!")
             return None
         try:
-            # Try different initialization methods for compatibility
+            # More robust OpenAI client initialization
             import openai
             openai_version = getattr(openai, '__version__', 'unknown')
             logger.info(f"OpenAI library version: {openai_version}")
             
-            # Try the newest initialization method first
+            # Try different initialization methods based on version and available constructors
+            client = None
+            
+            # Method 1: Try the new OpenAI client (v1.0+)
             try:
+                # Try with minimal arguments first
                 client = OpenAI(api_key=api_key)
-                logger.info("OpenAI client initialized with new method")
+                logger.info("OpenAI client initialized with new v1+ method")
             except TypeError as e:
-                if 'proxies' in str(e):
-                    # Older version that doesn't support proxies parameter
-                    logger.info("Trying older OpenAI client initialization method")
-                    # For older versions, try direct import
-                    import openai as openai_module
-                    openai_module.api_key = api_key
-                    client = openai_module
-                    logger.info("OpenAI client initialized with legacy method")
-                else:
-                    raise e
+                logger.info(f"New method failed: {str(e)}")
+                # Method 2: Try older client pattern
+                try:
+                    # For very old versions, set api_key directly
+                    openai.api_key = api_key
+                    client = openai
+                    logger.info("OpenAI client initialized with legacy method (direct api_key)")
+                except Exception as e2:
+                    logger.error(f"Legacy method also failed: {str(e2)}")
+                    # Method 3: Try importing specific classes
+                    try:
+                        from openai import OpenAI as OpenAIClient
+                        # Try without any optional parameters
+                        client = OpenAIClient()
+                        # Set api_key after initialization if needed
+                        if hasattr(client, 'api_key'):
+                            client.api_key = api_key
+                        logger.info("OpenAI client initialized with fallback method")
+                    except Exception as e3:
+                        logger.error(f"All initialization methods failed: {str(e3)}")
+                        return None
+            except Exception as e:
+                logger.error(f"Unexpected error during OpenAI client initialization: {str(e)}")
+                return None
+                
+            # Verify client is usable
+            if client is None:
+                logger.error("OpenAI client is None after initialization attempts")
+                return None
+                
         except Exception as e:
             logger.error(f"Failed to initialize OpenAI client: {str(e)}")
             logger.error(f"OpenAI version: {getattr(openai, '__version__', 'unknown')}")
@@ -115,9 +139,13 @@ def index():
                 return render_template("index.html", response=error_message)
 
             # Send data to OpenAI endpoint - handle different client types
+            logger.info(f"OpenAI client type: {type(openai_client)}")
+            logger.info(f"OpenAI client attributes: {dir(openai_client)}")
+            
             try:
-                if hasattr(openai_client, 'responses'):
-                    # New OpenAI client format
+                # Try the new responses API first (if available)
+                if hasattr(openai_client, 'responses') and hasattr(openai_client.responses, 'create'):
+                    logger.info("Using new OpenAI responses API")
                     response = openai_client.responses.create(
                         prompt={
                             "id": os.environ.get("OPENAI_PROMPT_ID"),
@@ -137,20 +165,55 @@ def index():
                         max_output_tokens=2048,
                         store=True
                     )
-                    # Extract plain text from the response
                     plain_text = response.output[0].content[0].text
-                else:
-                    # Legacy OpenAI client - use completions
+                    
+                # Try chat completions API (most common)
+                elif hasattr(openai_client, 'chat') and hasattr(openai_client.chat, 'completions'):
+                    logger.info("Using chat completions API")
+                    prompt_text = f"Create a detailed lesson plan for {subject} ({specialty}) for grade {grade}. Duration: {hoursperday} hours/day for {numweeks} weeks in {state}. Focus: {focus}. Additional details: {user_input}"
+                    
+                    response = openai_client.chat.completions.create(
+                        model="gpt-3.5-turbo",
+                        messages=[{"role": "user", "content": prompt_text}],
+                        max_tokens=2048,
+                        temperature=0.7
+                    )
+                    plain_text = response.choices[0].message.content.strip()
+                    
+                # Try legacy completions API
+                elif hasattr(openai_client, 'completions') and hasattr(openai_client.completions, 'create'):
+                    logger.info("Using legacy completions API")
+                    prompt_text = f"Create a lesson plan for {subject} ({specialty}) for grade {grade}. Duration: {hoursperday} hours/day for {numweeks} weeks in {state}. Focus: {focus}. Additional details: {user_input}"
+                    
                     response = openai_client.completions.create(
                         model="gpt-3.5-turbo-instruct",
-                        prompt=f"Create a lesson plan for {subject} ({specialty}) for grade {grade}. Duration: {hoursperday} hours/day for {numweeks} weeks in {state}. Focus: {focus}. Additional details: {user_input}",
+                        prompt=prompt_text,
                         max_tokens=2048,
                         temperature=0.7
                     )
                     plain_text = response.choices[0].text.strip()
-            except AttributeError as e:
-                logger.error(f"OpenAI client method not found: {str(e)}")
-                raise Exception("OpenAI client configuration error")
+                    
+                # Try very old API format
+                elif hasattr(openai_client, 'Completion'):
+                    logger.info("Using very old OpenAI API format")
+                    prompt_text = f"Create a lesson plan for {subject} ({specialty}) for grade {grade}. Duration: {hoursperday} hours/day for {numweeks} weeks in {state}. Focus: {focus}. Additional details: {user_input}"
+                    
+                    response = openai_client.Completion.create(
+                        model="gpt-3.5-turbo-instruct",
+                        prompt=prompt_text,
+                        max_tokens=2048,
+                        temperature=0.7
+                    )
+                    plain_text = response.choices[0].text.strip()
+                    
+                else:
+                    logger.error("No compatible OpenAI API method found")
+                    raise Exception("OpenAI client has no compatible API methods")
+                    
+            except Exception as api_error:
+                logger.error(f"OpenAI API call failed: {str(api_error)}")
+                logger.error(f"Available client methods: {[attr for attr in dir(openai_client) if not attr.startswith('_')]}")
+                raise Exception(f"OpenAI API error: {str(api_error)}")
             logger.info("Successfully generated lesson plan")
 
             # Render the response on the page
