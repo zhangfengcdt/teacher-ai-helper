@@ -55,21 +55,29 @@ def get_openai_client():
             logger.error("OPENAI_API_KEY environment variable is not set!")
             return None
         try:
-            # Initialize OpenAI client with minimal parameters
-            client = OpenAI(api_key=api_key)
-            logger.info("OpenAI client initialized successfully")
-        except TypeError as e:
-            # Handle version compatibility issues
-            logger.error(f"OpenAI client initialization failed due to version mismatch: {str(e)}")
+            # Try different initialization methods for compatibility
+            import openai
+            openai_version = getattr(openai, '__version__', 'unknown')
+            logger.info(f"OpenAI library version: {openai_version}")
+            
+            # Try the newest initialization method first
             try:
-                # Try with just the API key
                 client = OpenAI(api_key=api_key)
-                logger.info("OpenAI client initialized successfully with fallback method")
-            except Exception as e2:
-                logger.error(f"Failed to initialize OpenAI client even with fallback: {str(e2)}")
-                return None
+                logger.info("OpenAI client initialized with new method")
+            except TypeError as e:
+                if 'proxies' in str(e):
+                    # Older version that doesn't support proxies parameter
+                    logger.info("Trying older OpenAI client initialization method")
+                    # For older versions, try direct import
+                    import openai as openai_module
+                    openai_module.api_key = api_key
+                    client = openai_module
+                    logger.info("OpenAI client initialized with legacy method")
+                else:
+                    raise e
         except Exception as e:
             logger.error(f"Failed to initialize OpenAI client: {str(e)}")
+            logger.error(f"OpenAI version: {getattr(openai, '__version__', 'unknown')}")
             return None
     return client
 
@@ -106,29 +114,43 @@ def index():
                 error_message = f"🤖 Oops! I need some configuration first! Missing: {', '.join(missing_vars)}. Please set up your .env file! 😅"
                 return render_template("index.html", response=error_message)
 
-            # Send data to OpenAI endpoint
-            response = openai_client.responses.create(
-                prompt={
-                    "id": os.environ.get("OPENAI_PROMPT_ID"),
-                    "version": os.environ.get("OPENAI_PROMPT_VERSION", "5"),
-                    "variables": {
-                        "subject": subject,
-                        "specialty": specialty,
-                        "grade": grade,
-                        "hoursperday": hoursperday,
-                        "numweeks": numweeks,
-                        "state": state,
-                        "focus": focus
-                    }
-                },
-                input=[{"role": "user", "content": user_input}],
-                reasoning={},
-                max_output_tokens=2048,
-                store=True
-            )
-
-            # Extract plain text from the response
-            plain_text = response.output[0].content[0].text
+            # Send data to OpenAI endpoint - handle different client types
+            try:
+                if hasattr(openai_client, 'responses'):
+                    # New OpenAI client format
+                    response = openai_client.responses.create(
+                        prompt={
+                            "id": os.environ.get("OPENAI_PROMPT_ID"),
+                            "version": os.environ.get("OPENAI_PROMPT_VERSION", "5"),
+                            "variables": {
+                                "subject": subject,
+                                "specialty": specialty,
+                                "grade": grade,
+                                "hoursperday": hoursperday,
+                                "numweeks": numweeks,
+                                "state": state,
+                                "focus": focus
+                            }
+                        },
+                        input=[{"role": "user", "content": user_input}],
+                        reasoning={},
+                        max_output_tokens=2048,
+                        store=True
+                    )
+                    # Extract plain text from the response
+                    plain_text = response.output[0].content[0].text
+                else:
+                    # Legacy OpenAI client - use completions
+                    response = openai_client.completions.create(
+                        model="gpt-3.5-turbo-instruct",
+                        prompt=f"Create a lesson plan for {subject} ({specialty}) for grade {grade}. Duration: {hoursperday} hours/day for {numweeks} weeks in {state}. Focus: {focus}. Additional details: {user_input}",
+                        max_tokens=2048,
+                        temperature=0.7
+                    )
+                    plain_text = response.choices[0].text.strip()
+            except AttributeError as e:
+                logger.error(f"OpenAI client method not found: {str(e)}")
+                raise Exception("OpenAI client configuration error")
             logger.info("Successfully generated lesson plan")
 
             # Render the response on the page
