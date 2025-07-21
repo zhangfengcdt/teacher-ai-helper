@@ -9,20 +9,19 @@
             font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #fd79a8);
-            background-size: 400% 400%;
-            animation: rainbowGradient 15s ease infinite;
+            background: linear-gradient(to bottom, #ff6b6b, #4568dc);
+            background-size: 100% 400%;
+            animation: gradientShift 15s ease infinite;
             min-height: 100vh;
             line-height: 1.4;
             color: #333;
         }
 
-        @keyframes rainbowGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes gradientShift {
+            0% { background-position: 50% 0%; }
+            50% { background-position: 50% 100%; }
+            100% { background-position: 50% 0%; }
         }
-
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
